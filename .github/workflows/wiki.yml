@@ -46,4 +46,4 @@ jobs:
         run: pip install -r requirements.txt
       - name: Deploy wiki
         working-directory: ./wiki
-        run: mike deploy ${{ inputs.version }} ${{ inputs.alias }} --update-aliases --remote pages-remote --prefix wiki --push
+        run: mike deploy ${{ inputs.version }} ${{ inputs.alias }} --update-aliases --prefix wiki --remote pages-remote --push
