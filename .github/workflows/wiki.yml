@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v4.1.1
       - name: Add pages remote
         run: |
-          git config credential.helper '!f() { echo username=author; echo "password=$GIT_TOKEN"; };f'
+          git config credential.helper '!f() { echo username=freya022; echo "password=$GIT_TOKEN"; };f'
           git remote add pages-remote https://github.com/freya022/JavadocWikiTest-Pages
           git fetch pages-remote gh-pages --depth=1
       - name: Configure Git user
