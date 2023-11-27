@@ -44,6 +44,9 @@ jobs:
       - name: Install Python dependencies
         working-directory: ./wiki
         run: pip install -r requirements.txt
-      - name: Deploy wiki
+      - name: Generate wiki
         working-directory: ./wiki
-        run: mike deploy ${{ inputs.version }} ${{ inputs.alias }} --update-aliases --remote pages-remote --deploy-prefix wiki --push
+        run: mike deploy ${{ inputs.version }} ${{ inputs.alias }} --update-aliases --deploy-prefix wiki
+      - name: Push wiki
+        run: |
+          git push pages-remote HEAD:gh-pages
