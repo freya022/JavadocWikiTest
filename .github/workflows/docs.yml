@@ -30,7 +30,9 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
-          folder: ./target/site/apidocs
-          repository-name: freya022/JavadocWikiTest-Pages
+          git-config-name: github-actions
+          git-config-email: github-actions@github.com
           token: ${{ secrets.REMOTE_GH_PAGES_REPO_PAT }}
+          repository-name: freya022/JavadocWikiTest-Pages
+          folder: ./target/site/apidocs
           target-folder: docs
