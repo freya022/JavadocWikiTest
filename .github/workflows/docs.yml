@@ -32,7 +32,7 @@ jobs:
         with:
           git-config-name: github-actions
           git-config-email: github-actions@github.com
-          token: ${{ secrets.REMOTE_GH_PAGES_REPO_PAT }}
+          ssh-key: ${{ secrets.REMOTE_GH_PAGES_REPO_SSH_KEY }}
           repository-name: freya022/JavadocWikiTest-Pages
           folder: ./target/site/apidocs
           target-folder: docs
