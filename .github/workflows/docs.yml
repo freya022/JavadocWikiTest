@@ -32,10 +32,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: 'maven'
-      - name: Set release version
-        run: mvn -B --file pom.xml BotCommandsBuild:set-ci-version
       - name: Generate Javadocs
-        run: mvn -B --file pom.xml -P check-docs javadoc:javadoc
+        run: mvn -B javadoc:javadoc
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
