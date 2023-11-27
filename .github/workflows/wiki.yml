@@ -36,7 +36,7 @@ jobs:
       - name: Add pages remote
         run: |
           git remote add pages-remote git@github.com:freya022/JavadocWikiTest-Pages.git
-          git fetch pages-remote gh-pages --depth=1
+          git fetch pages-remote gh-pages:gh-pages --depth=1
           
       - uses: actions/setup-python@v4.7.1
         with:
