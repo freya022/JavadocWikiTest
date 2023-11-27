@@ -22,22 +22,20 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      GIT_TOKEN: ${{ secrets.REMOTE_GH_PAGES_REPO_PAT }}
     steps:
-      - name: Checkout main repo
+      - name: Checkout
         uses: actions/checkout@v4.1.1
-        with:
-          path: main
-      - name: Checkout pages repo
-        uses: actions/checkout@v4
-        with:
-          repository: freya022/JavadocWikiTest-Pages
-          token: ${{ secrets.REMOTE_GH_PAGES_REPO_PAT }}
-          path: nested
-      - run: |
+      - name: Add pages remote
+        run: |
+          git config credential.helper '!f() { echo username=author; echo "password=$GIT_TOKEN"; };f'
+          git remote add pages-remote https://github.com/freya022/JavadocWikiTest-Pages
+          git fetch pages-remote gh-pages --depth=1
+      - name: Configure Git user
+        run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-      - run: |
-          echo $(git remote -v)
           
       # - uses: actions/setup-python@v4.7.1
       #   with:
