@@ -27,15 +27,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
-      - name: Add pages remote
-        run: |
-          git config credential.helper '!f() { echo username=freya022; echo "password=$GIT_TOKEN"; };f'
-          git remote add pages-remote https://github.com/freya022/JavadocWikiTest-Pages
-          git fetch pages-remote gh-pages --depth=1
       - name: Configure Git user
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
+          git config credential.helper '!f() { echo username=github-actions; echo "password=$GIT_TOKEN"; };f'
+      - name: Add pages remote
+        run: |
+          git remote add pages-remote https://github.com/freya022/JavadocWikiTest-Pages
+          git fetch pages-remote gh-pages --depth=1
           
       - uses: actions/setup-python@v4.7.1
         with:
@@ -49,4 +49,4 @@ jobs:
         run: mike deploy ${{ inputs.version }} ${{ inputs.alias }} --update-aliases --deploy-prefix wiki
       - name: Push wiki
         run: |
-          git -c credential.helper= -c credential.helper='!f() { echo username=freya022; echo "password=$GIT_TOKEN"; };f' push pages-remote HEAD:gh-pages
+          git push pages-remote HEAD:gh-pages
