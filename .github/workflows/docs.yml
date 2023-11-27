@@ -31,6 +31,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
           folder: ./target/site/apidocs
-          repository-name: JavadocWikiTest-Pages
+          repository-name: freya022/JavadocWikiTest-Pages
           token: ${{ secrets.REMOTE_GH_PAGES_REPO_PAT }}
           target-folder: docs
