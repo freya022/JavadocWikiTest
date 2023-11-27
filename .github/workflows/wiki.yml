@@ -22,8 +22,6 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      GIT_TOKEN: ${{ secrets.REMOTE_GH_PAGES_REPO_PAT }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -31,10 +29,13 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git config credential.helper '!f() { echo username=github-actions; echo "password=$GIT_TOKEN"; };f'
+      # https://github.com/marketplace/actions/webfactory-ssh-agent#support-for-github-deploy-keys
+      - uses: webfactory/ssh-agent@v0.8.0
+        with:
+            ssh-private-key: ${{ secrets.REMOTE_GH_PAGES_REPO_SSH_KEY }}
       - name: Add pages remote
         run: |
-          git remote add pages-remote https://github.com/freya022/JavadocWikiTest-Pages
+          git remote add pages-remote git@github.com:freya022/JavadocWikiTest-Pages.git
           git fetch pages-remote gh-pages --depth=1
           
       - uses: actions/setup-python@v4.7.1
