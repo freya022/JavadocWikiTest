@@ -49,4 +49,4 @@ jobs:
         run: mike deploy ${{ inputs.version }} ${{ inputs.alias }} --update-aliases --deploy-prefix wiki
       - name: Push wiki
         run: |
-          git push -c credential.helper= -c credential.helper='!f() { echo username=freya022; echo "password=$GIT_TOKEN"; };f' pages-remote HEAD:gh-pages
+          git -c credential.helper= -c credential.helper='!f() { echo username=freya022; echo "password=$GIT_TOKEN"; };f' push pages-remote HEAD:gh-pages
