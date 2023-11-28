@@ -3,6 +3,6 @@ package io.github.freya022.docs;
 /**
  * Documentation
  */
-public class DocsTest {
+public class DocsTest2 {
 
 }
