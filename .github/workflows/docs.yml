@@ -30,8 +30,8 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
-          git-config-name: github-actions
-          git-config-email: github-actions@github.com
+          git-config-name: GitHub Actions
+          git-config-email: 41898282+github-actions[bot]@users.noreply.github.com
           ssh-key: ${{ secrets.REMOTE_GH_PAGES_REPO_SSH_KEY }}
           repository-name: freya022/JavadocWikiTest-Pages
           folder: ./target/site/apidocs

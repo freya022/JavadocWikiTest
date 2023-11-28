@@ -27,8 +27,8 @@ jobs:
         uses: actions/checkout@v4.1.1
       - name: Configure Git user
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name GitHub Actions
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
       # https://github.com/marketplace/actions/webfactory-ssh-agent#support-for-github-deploy-keys
       - uses: webfactory/ssh-agent@v0.8.0
         with:
