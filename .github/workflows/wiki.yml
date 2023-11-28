@@ -47,7 +47,7 @@ jobs:
         run: pip install -r requirements.txt
       - name: Generate wiki
         working-directory: ./wiki
-        run: mike deploy ${{ inputs.version }} ${{ inputs.alias }} --update-aliases --deploy-prefix wiki
+        run: mike deploy ${{ inputs.version }} ${{ inputs.alias }} --update-aliases
       - name: Push wiki
         run: |
           git push pages-remote gh-pages:gh-pages
