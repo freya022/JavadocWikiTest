@@ -36,7 +36,7 @@ jobs:
       - name: Add pages remote
         run: |
           git remote add staging-remote git@github.com:freya022/JavadocWikiTest-Pages.git
-          git fetch staging-remote staging --depth=1
+          git fetch staging-remote staging:staging --depth=1
           
       - uses: actions/setup-python@v4
         with:
@@ -51,7 +51,7 @@ jobs:
       # The wiki is uploaded in the staging repository root
       - name: Push to staging repository
         run: |
-          git push staging-remote staging
+          git push staging-remote staging:staging
   deploy:
     needs: staging
     
