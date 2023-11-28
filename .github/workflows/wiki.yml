@@ -20,11 +20,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  staging:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4
       - name: Configure Git user
         run: |
           git config user.name GitHub Actions
@@ -35,10 +35,10 @@ jobs:
             ssh-private-key: ${{ secrets.REMOTE_GH_PAGES_REPO_SSH_KEY }}
       - name: Add pages remote
         run: |
-          git remote add pages-remote git@github.com:freya022/JavadocWikiTest-Pages.git
-          git fetch pages-remote gh-pages:gh-pages --depth=1
+          git remote add staging-remote git@github.com:freya022/JavadocWikiTest-Pages.git
+          git fetch staging-remote staging --depth=1
           
-      - uses: actions/setup-python@v4.7.1
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.x
           cache: 'pip'
@@ -47,7 +47,37 @@ jobs:
         run: pip install -r requirements.txt
       - name: Generate wiki
         working-directory: ./wiki
-        run: mike deploy ${{ inputs.version }} ${{ inputs.alias }} --update-aliases
-      - name: Push wiki
+        run: mike deploy ${{ inputs.version }} ${{ inputs.alias }} --update-aliases --branch staging
+      # The wiki is uploaded in the staging repository root
+      - name: Push to staging repository
         run: |
-          git push pages-remote gh-pages:gh-pages
+          git push staging-remote staging
+  deploy:
+    needs: staging
+    
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    runs-on: ubuntu-latest
+    steps:
+      # The entire staging repository (docs + wiki) gets deployed
+      - uses: actions/checkout@v4
+        with:
+          ssh-key: ${{ secrets.REMOTE_GH_PAGES_REPO_SSH_KEY }}
+          repository: freya022/JavadocWikiTest-Pages
+          ref: staging
+      - name: Upload staging repository
+        uses: actions/upload-pages-artifact@v2
+        with:
+          # Upload entire repository
+          path: .
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
