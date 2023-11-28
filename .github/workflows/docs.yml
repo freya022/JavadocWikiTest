@@ -28,7 +28,7 @@ jobs:
       - name: Generate Javadocs
         run: mvn -B javadoc:javadoc
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
           git-config-name: GitHub Actions
           git-config-email: 41898282+github-actions[bot]@users.noreply.github.com
