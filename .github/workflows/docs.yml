@@ -27,13 +27,15 @@ jobs:
           cache: 'maven'
       - name: Generate Javadocs
         run: mvn -B javadoc:javadoc
-      - name: Deploy
+      # The javadocs are uploaded to a directory in the staging repository
+      - name: Upload to staging repository
         uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
           git-config-name: GitHub Actions
           git-config-email: 41898282+github-actions[bot]@users.noreply.github.com
           ssh-key: ${{ secrets.REMOTE_GH_PAGES_REPO_SSH_KEY }}
           repository-name: freya022/JavadocWikiTest-Pages
+          branch: staging
           folder: ./target/site/apidocs
           target-folder: docs
   deploy:
@@ -56,7 +58,7 @@ jobs:
         with:
           ssh-key: ${{ secrets.REMOTE_GH_PAGES_REPO_SSH_KEY }}
           repository: freya022/JavadocWikiTest-Pages
-          ref: gh-pages
+          ref: staging
       - name: Upload staging repository
         uses: actions/upload-pages-artifact@v2
         with:
